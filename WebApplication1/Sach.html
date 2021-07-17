@@ -16,6 +16,15 @@
         <input type="button" value="Search" onclick="find();" />
         <p id="sach" />
     </div>
+    <div>
+        <h2>Add sách</h2>
+        <p>ID: <input type="text" id="Id" /></p>
+        <p>Title: <input type="text" id="Title" /></p>
+        <p>Price: <input type="text" id="Price" /></p>
+        <button type="submit" id="add-order">Them</button>
+        <button type="submit" id="edit-order">Sua</button>
+
+    </div>
     <script src="https://code.jquery.com/jquery-2.0.3.js" integrity="sha256-lCf+LfUffUxr81+W0ZFpcU0LQyuZ3Bj0F2DQNCxTgSI=" crossorigin="anonymous"></script>
     <script>
         var uri = 'api/sach';
@@ -41,8 +50,51 @@
                 });
         }
     </script>
-
     <script>
+        let indexEdit = -1;
+        var $Title = $('#Title');
+        var $Id = $('#Id');
+        var $Price = $('#Price');
+        var uri = 'api/sach';
+
+        function getAll() {
+            $('#saches').text("");
+            $(document).ready(function () {
+                $.getJSON(uri)
+                    .done(function (data) {
+                        $.each(data, function (key, item) {
+                            let ele = $('<li>', { text: formatItem(item) })
+
+                            let btnxoa = $('<span>', { text: "| Delete" })
+                            btnxoa.on('click', function () {
+                                DeleteBook(item.Id)
+                            })
+                            btnxoa.css("cursor", "pointer")
+                            btnxoa.css("color", "red")
+                            btnxoa.css("margin-left", "10px")
+                            btnxoa.appendTo(ele)
+                            ele.appendTo($('#saches'));
+                        });
+                    });
+            });
+        }
+        getAll();
+        function formatItem(item) {
+            return item.Id + "-" + item.Title + ': $' + item.Price;
+        }
+        function DeleteBook(Id) {
+            console.log(Id)
+            $.ajax({
+                url: uri + "/" + Id,
+                type: 'DELETE',
+                success: function () {
+                    getAll();
+                }
+            })
+        }
+    </script>
+
+    <!--<script>
         $.delete = function (url, data, callback, type) {
 
             if ($.isFunction(data)) {
@@ -59,6 +111,6 @@
                 contentType: type
             });
         }
-    </script>
+    </script>-->
 </body>
 </html>
