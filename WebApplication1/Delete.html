@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <script>
+        $.delete = function (url, data, callback, type) {
+
+            if ($.isFunction(data)) {
+                type = type || callback,
+                    callback = data,
+                    data = {}
+            }
+
+            return $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: callback,
+                data: data,
+                contentType: type
+            });
+        }
+    </script>
+</body>
+</html>

@@ -81,7 +81,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Delete.html" />
     <Content Include="Global.asax" />
+    <Content Include="QLSach.sql" />
     <Content Include="Sach.html" />
     <Content Include="TextFile1.txt" />
     <Content Include="Web.config" />
